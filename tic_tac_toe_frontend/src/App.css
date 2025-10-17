@@ -1,104 +1,207 @@
-/* CSS Variables for Theme Management */
+/* Ocean Professional Theme Variables */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --primary: #2563EB;      /* Blue */
+  --secondary: #F59E0B;    /* Amber */
+  --success: #F59E0B;      /* Amber for highlights */
+  --error: #EF4444;        /* Red */
+  --background: #f9fafb;   /* Light gray */
+  --surface: #ffffff;      /* White */
+  --text: #111827;         /* Slate/near-black */
+  --muted: #6b7280;        /* Gray 500 */
+  --ring: rgba(37, 99, 235, 0.35);
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 6px 20px rgba(2, 6, 23, 0.08);
+  --shadow-lg: 0 10px 30px rgba(2, 6, 23, 0.12);
+
+  --radius: 16px;
+  --radius-sm: 10px;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+/* Page Shell with subtle gradient background (from-blue-500/10 to-gray-50) */
+.page-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(160deg, rgba(59, 130, 246, 0.10), rgba(249, 250, 251, 1) 55%);
 }
 
-.App {
+/* Container */
+.app-container {
+  width: min(960px, 92vw);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: clamp(16px, 3vw, 28px);
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  gap: 16px;
+}
+
+/* Header */
+.app-header {
   text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(17, 24, 39, 0.06);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.title {
+  margin: 0;
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  letter-spacing: 0.2px;
+  color: var(--text);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.status {
+  margin: 6px 0 0 0;
+  color: var(--muted);
+  font-weight: 600;
 }
 
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
+.status.win {
+  color: var(--primary);
+}
+
+.status.draw {
+  color: var(--secondary);
+}
+
+/* Game area */
+.game-area {
+  display: grid;
+  place-items: center;
+  padding: clamp(8px, 2vw, 16px);
+}
+
+/* Board */
+.ttt-board {
+  display: grid;
+  gap: 10px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+/* Square styling */
+.ttt-square {
+  width: min(24vw, 120px);
+  height: min(24vw, 120px);
+  background: linear-gradient(180deg, #ffffff, #f5f7fb);
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
   position: relative;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
-}
-
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.theme-toggle:hover {
+.ttt-square:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 24px rgba(2, 6, 23, 0.12);
+  border-color: var(--ring);
+}
+
+.ttt-square:disabled {
+  cursor: not-allowed;
   opacity: 0.9;
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+/* Winning highlight */
+.ttt-square.highlight {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--ring), var(--shadow-md);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Marks */
+.mark {
+  font-size: clamp(2rem, 7vw, 3rem);
+  font-weight: 800;
+  letter-spacing: 1px;
+  line-height: 1;
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+.mark.x {
+  color: var(--primary);
+  text-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+}
+
+.mark.o {
+  color: var(--secondary);
+  text-shadow: 0 6px 16px rgba(245, 158, 11, 0.25);
+}
+
+.ttt-square.filled {
+  background: linear-gradient(180deg, #ffffff, #f3f4f6);
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  padding: 8px 0 4px 0;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 700;
+  padding: 10px 16px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 120ms ease, box-shadow 160ms ease, border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn.primary {
+  background: linear-gradient(180deg, #2563EB, #1d4ed8);
+  color: white;
+  border: none;
+}
+
+.btn.primary:hover {
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.35);
+}
+
+.btn.ghost {
+  background: #f8fafc;
+}
+
+.btn.ghost:hover {
+  border-color: var(--ring);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  color: var(--muted);
+  padding-top: 6px;
+  border-top: 1px solid rgba(17, 24, 39, 0.06);
+}
+
+@media (max-width: 480px) {
+  .ttt-square {
+    width: 24vw;
+    height: 24vw;
+  }
+  .controls {
+    flex-direction: row;
   }
 }
