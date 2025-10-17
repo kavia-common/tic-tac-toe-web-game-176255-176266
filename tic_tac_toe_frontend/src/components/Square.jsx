@@ -13,14 +13,38 @@ export default function Square({ value, onClick, disabled, highlight }) {
    * - disabled: boolean to disable interactions (e.g., after win)
    * - highlight: boolean to visually emphasize a winning square
    */
+
+  // Map internal values to chess icons and labels
+  const renderContent = () => {
+    if (value === 'X') {
+      return (
+        <span className="mark mark-icon x" role="img" aria-label="Knight">
+          ♞
+        </span>
+      );
+    }
+    if (value === 'O') {
+      return (
+        <span className="mark mark-icon o" role="img" aria-label="Queen">
+          ♛
+        </span>
+      );
+    }
+    return <span className="mark mark-empty" aria-hidden="true"></span>;
+  };
+
+  const ariaLabel = value === 'X' ? 'Square with Knight'
+    : value === 'O' ? 'Square with Queen'
+    : 'Square empty';
+
   return (
     <button
       className={`ttt-square ${highlight ? 'highlight' : ''} ${value ? 'filled' : ''}`}
       onClick={onClick}
       disabled={disabled || Boolean(value)}
-      aria-label={`Square ${value ? value : 'empty'}`}
+      aria-label={ariaLabel}
     >
-      <span className={`mark ${value === 'X' ? 'x' : value === 'O' ? 'o' : ''}`}>{value}</span>
+      {renderContent()}
     </button>
   );
 }

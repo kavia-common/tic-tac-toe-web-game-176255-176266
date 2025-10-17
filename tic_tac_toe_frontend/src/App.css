@@ -120,12 +120,26 @@
 
 /* Marks */
 .mark {
-  font-size: clamp(2rem, 7vw, 3rem);
-  font-weight: 800;
-  letter-spacing: 1px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
 }
 
+.mark-icon {
+  /* Slightly larger for readability; responsive on mobile */
+  font-size: clamp(2.2rem, 8vw, 3.2rem);
+  /* Emojis/icons don't need heavy weight; keep crisp */
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.mark-empty {
+  width: 1em;
+  height: 1em;
+}
+
+/* Color accents for icons */
 .mark.x {
   color: var(--primary);
   text-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
